@@ -1,0 +1,38 @@
+<div id="quote-section" class="container">
+    <div class="row">
+        <div class="col-sm-6 col-lg-4 text-center quote-block" *ngFor="let quote of quotes">
+            <img
+                class="quote-image rounded-circle"
+                src="../../../assets/images/men/man-pp.jpg"
+                alt="">
+            <div class="card quote-card">
+                <div class="card-header quote-header bg-transparent">
+                    <button class="close" type="button" data-toggle="dropdown">
+                        ...
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item pointer">Edit</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item pointer" (click)="deleteQuote(quote._id)">Delete</a>
+                    </div>
+                </div>
+                <div class="card-body quote-body mx-1">
+                    <h6 class="card-title"><i class="fa fa-quote-left"></i></h6>
+                    <p class="card-text quote-text lead">
+                        {{ quote.content }}
+                    </p>
+                    <h6 class="card-title"><i class="fa fa-quote-right"></i></h6>
+                </div>
+                <div class="card-footer quote-author bg-transparent">
+                    <blockquote class="blockquote-footer text-right">
+                        @{{ quote.author }}
+                    </blockquote>
+                </div>
+                <div class="card-footer quote-reacts text-left bg-transparent">
+                    <i class="far fa-heart fa-lg pointer ml-1 mr-2"></i>
+                    <i class="far fa-comment fa-lg pointer ml-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

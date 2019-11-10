@@ -1,0 +1,53 @@
+<div id="friends-section" class="card mb-3">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a
+                    class="nav-link text-center text-dark pointer"
+                    [class.active]="display === displayEnum.Friends"
+                    (click)="viewFriends()">Friends</a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link text-center text-dark pointer"
+                    [class.active]="display === displayEnum.SentFriendRequests"
+                    (click)="viewSentRequests()">Sent</a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link text-center text-dark pointer"
+                    [class.active]="display === displayEnum.ReceivedFriendRequests"
+                    (click)="viewReceivedRequests()">Received</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body friends-list">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 text-center friend-block" *ngFor="let friend of friends">
+                <img
+                    class="friend-image rounded-circle"
+                    [src]="friend.image"
+                    alt="">
+                <div class="card friend-card">
+                    <div class="card-header friend-header bg-transparent">
+                        <button class="close" type="button" data-toggle="dropdown">
+                            ...
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item pointer">Delete</a>
+                        </div>
+                    </div>
+                    <div class="card-body friend-body">
+                        <div class="lead friend-fullname">{{ friend.fullname }}</div>
+                        <blockquote class="blockquote-footer friend-username">
+                            @{{ friend.username }}
+                        </blockquote>
+                        <p class="lead friend-description mb-1">
+                            {{ friend.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

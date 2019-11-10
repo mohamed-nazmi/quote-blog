@@ -1,0 +1,56 @@
+<header id="profile-section">
+    <div class="dark-overlay">
+        <div class="home-inner container">
+            <div class="text-center">
+                <img class="profile-image rounded-circle" src="../../../assets/images/men/man-pp.jpg">
+                <h1 class="mt-2 text-white display-4 profile-fullname mb-1">
+                    Frank <strong>Damon</strong>
+                </h1>
+                <span class="blockquote-footer profile-username mb-2">
+                    @frank-damon12
+                    <a href="" class="text-secondary" data-toggle="modal" data-target="#writeModal"><i class="fa fa-pencil-alt ml-2"></i></a>
+                </span>
+                <div class="mt-3">
+                    <button (click)="viewQuotesSection()" class="btn profile-button mr-2 px-4" [class.profile-button-active]="viewQuotes">View Quotes</button><button (click)="viewFriendsSection()" class="btn profile-button px-4" [class.profile-button-active]="!viewQuotes">View Friends</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container mt-3 mb-2" *ngIf="viewQuotes">
+        <app-quotes></app-quotes>
+    </div>
+    <div class="container mt-3 mb-2" *ngIf="!viewQuotes">
+        <app-friends></app-friends>
+    </div>
+</section>
+
+<div id="writeModal" class="modal fade text-dark">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">What's new?</h5>
+                <button class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="newQuoteForm">
+                <div class="modal-body pb-2">
+                    <div class="form-group">
+                        <textarea
+                            formControlName="newQuote"
+                            type="text"
+                            class="form-control"
+                            placeholder="Write a new quote"
+                            rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="submitModal" data-dismiss="modal" (click)="addQuote(newQuote)" class="btn modal-submit" [disabled]="newQuoteForm.invalid">Add Quote</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

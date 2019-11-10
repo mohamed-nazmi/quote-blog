@@ -1,0 +1,50 @@
+#friends-section .nav-link {
+    width: 6.2rem;
+}
+
+#friends-section .friends-list {
+    padding: 1.25rem 1.25rem 0rem;
+}
+
+#friends-section .friend-block {
+    height: 266px;
+    padding: 0px 5px;
+    margin-bottom: 16px;
+}
+
+#friends-section .friend-card {
+    position: relative;
+    bottom: 40px;
+    height: 214px;
+}
+
+#friends-section .friend-image {
+    position: relative;
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+}
+
+#friends-section .friend-header {
+    border: none !important;
+    padding-top: 0.4rem !important;
+}
+
+#friends-section .friend-body {
+    padding: 12px 20px;
+}
+
+#friends-section .friend-fullname {
+    margin-bottom: 2px;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+#friends-section .friend-username {
+    font-size: 1rem;
+}
+
+#friends-section .friend-description {
+    font-size: 1rem;
+    font-weight: 400;
+}

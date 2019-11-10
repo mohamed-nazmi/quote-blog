@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-md navbar-dark navbar-bg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mx-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a routerLink="/in" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item mx-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a routerLink="/in/profile" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

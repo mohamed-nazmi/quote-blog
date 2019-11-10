@@ -1,0 +1,93 @@
+#quote-section .quote-block {
+    padding: 0px 5px 2px;
+    margin-bottom: 12px;
+}
+
+#quote-section .quote-card {
+    position: relative;
+    bottom: 40px;
+}
+
+#quote-section .quote-image {
+    position: relative;
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+}
+
+#quote-section .quote-header {
+    border: none !important;
+    padding-top: 0.45rem !important;
+}
+
+#quote-section .quote-body {
+    padding-top: 24px;
+    padding-bottom: 2px !important;
+}
+
+#quote-section .quote-text {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+#quote-section .quote-author {
+    border: none !important;
+}
+
+#quote-section .blockquote-footer {
+    font-size: 1rem !important;
+}
+
+#quote-section .quote-reacts {
+    font-size: 1.05rem;
+}
+
+@media (min-width: 0px) {
+    #quote-section .quote-block {
+        height: 437px;
+    }
+
+    #quote-section .quote-card {
+        height: 385px;
+    }
+}
+
+@media (min-width: 576px) {
+    #quote-section .quote-block {
+        height: 482px;
+    }
+
+    #quote-section .quote-card {
+        height: 430px;
+    }
+}
+
+@media (min-width: 768px) {
+    #quote-section .quote-block {
+        height: 437px;
+    }
+
+    #quote-section .quote-card {
+        height: 385px;
+    }
+}
+
+@media (min-width: 992px) {
+    #quote-section .quote-block {
+        height: 460px;
+    }
+
+    #quote-section .quote-card {
+        height: 408px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #quote-section .quote-block {
+        height: 423px;
+    }
+
+    #quote-section .quote-card {
+        height: 370px;
+    }
+}

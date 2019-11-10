@@ -1,0 +1,55 @@
+#profile-section {
+    margin: 0;
+    background-color: rgb(11, 6, 22);
+    display: block;
+    min-height: 345px;
+}
+
+#profile-section .home-inner {
+    padding-top: 90px;
+}
+
+#profile-section .profile-image {
+    width: 100px;
+    height: 100px;
+    border: white 3px solid;
+}
+
+#profile-section .profile-fullname {
+    font-size: 1.6rem;
+}
+
+#profile-section .profile-username {
+    font-size: 1.08rem;
+}
+
+#profile-section .profile-button {
+    border-color: rgb(78, 10, 114) !important;
+    color: rgb(78, 10, 114) !important;
+    background-color: transparent;
+    font-weight: 400;
+}
+
+#profile-section .profile-button:hover,
+#profile-section .profile-button:focus,
+#profile-section .profile-button-active {
+    border-color: rgb(78, 10, 114) !important;
+    background-color: rgb(78, 10, 114) !important;
+    color: #fff !important;
+    font-weight: 400;
+    outline: none;
+    box-shadow: none;
+}
+
+.modal-submit {
+    background-color: rgb(78, 10, 114);
+    color: #fff;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.modal-submit:hover,
+.modal-submit:focus {
+    background-color: rgb(49, 10, 70);
+    color: #fff;
+}

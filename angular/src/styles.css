@@ -1,0 +1,19 @@
+body {
+    min-width: 360px;
+}
+
+button:focus {
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.card {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
