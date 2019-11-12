@@ -8,7 +8,10 @@ exports.getQuotes = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
         });
 };
 
@@ -26,7 +29,10 @@ exports.addQuote = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
         });
 };
 
@@ -37,6 +43,9 @@ exports.deleteQuote = (req, res, next) => {
             res.status(200).json({});
         })
         .catch(err => {
-            console.log(err);
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
         });
 };

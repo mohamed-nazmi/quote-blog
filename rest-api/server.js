@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 
+const authRoutes = require('./routes/auth');
 const quoteRoutes = require('./routes/quote');
 
 const app = express();
@@ -16,7 +17,19 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(authRoutes);
 app.use(quoteRoutes);
+
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({
+        message: message,
+        data: data
+    })
+});
 
 const MONGODB_URI = 'mongodb+srv://mnazmi:HvGMsyu29fXUOvOD@cluster0-rbjdo.mongodb.net/socialnetwork';
 
