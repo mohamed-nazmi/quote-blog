@@ -23,6 +23,10 @@
     font-size: 1.08rem;
 }
 
+#profile-section .profile-longer-btn {
+    padding: 6px 42px;
+}
+
 #profile-section .profile-button {
     border-color: rgb(78, 10, 114) !important;
     color: rgb(78, 10, 114) !important;
@@ -31,7 +35,6 @@
 }
 
 #profile-section .profile-button:hover,
-#profile-section .profile-button:focus,
 #profile-section .profile-button-active {
     border-color: rgb(78, 10, 114) !important;
     background-color: rgb(78, 10, 114) !important;
@@ -41,15 +44,45 @@
     box-shadow: none;
 }
 
-.modal-submit {
-    background-color: rgb(78, 10, 114);
-    color: #fff;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+#quote-modal .modal-dialog {
+    max-width: 350px !important;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.modal-submit:hover,
-.modal-submit:focus {
-    background-color: rgb(49, 10, 70);
+#quote-modal .profile-image {
+    width: 90px;
+    height: 90px;
+    border-width: 3px !important;
+}
+
+#quote-modal .modal-header {
+    padding-top: 36px;
+    padding-bottom: 8px;
+}
+
+#quote-modal .card,
+#quote-modal .card-footer {
+    border: none;
+}
+
+#quote-modal .blockquote-footer {
+    font-size: 1rem;
+}
+
+#quote-modal .quote-submit:hover:enabled,
+#quote-modal .quote-submit:focus:enabled {
+    background-color: rgb(57, 11, 82);
+    border-color: rgb(78, 10, 114);
     color: #fff;
+}
+
+#quote-modal textarea,
+#quote-modal textarea:focus {
+    font-weight: 400;
+    resize: none;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none;
+    overflow: hidden;
 }

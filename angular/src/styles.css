@@ -2,12 +2,12 @@ body {
     min-width: 360px;
 }
 
-button:focus {
-    outline: none;
-}
-
-textarea {
-    resize: none;
+button:focus,
+button:active,
+input:focus,
+input:active {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .card {
@@ -16,4 +16,29 @@ textarea {
 
 .pointer {
     cursor: pointer;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content-1 {
+    position: relative;
+    top: 5px;
+    z-index: 10;
+    border: none;
+}
+
+.modal-content-2 {
+    position: relative;
+    bottom: 40px;
+}
+
+.modal-footer {
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.modal-title {
+    font-weight: 400;
 }

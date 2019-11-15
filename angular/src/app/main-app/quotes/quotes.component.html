@@ -29,8 +29,107 @@
                     </blockquote>
                 </div>
                 <div class="card-footer quote-reacts text-left bg-transparent">
-                    <i class="far fa-heart fa-lg pointer ml-1 mr-2"></i>
-                    <i class="far fa-comment fa-lg pointer ml-1"></i>
+                    <i
+                        class="far fa-heart fa-lg pointer ml-1 mr-2"
+                        data-toggle="modal"
+                        data-target="#love-modal"></i>
+                    <i
+                        class="far fa-comment fa-lg pointer ml-1"
+                        data-toggle="modal"
+                        data-target="#comment-modal"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="love-modal" class="modal react-modal fade text-dark">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-1 bg-transparent">
+            <div class="row align-items-center home-circle rounded-circle bg-light text-center mx-auto">
+                <div class="col">
+                    <i class="far fa-heart fa-3x home-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="modal-content modal-content-2 bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title lead ml-1">
+                    4 Loves
+                </h5>
+            </div>
+            <div class="modal-body pt-2 pb-1">
+                <div class="list-container">
+                    <div class="list-container-inner">
+                        <ul class="list-group mb-2">
+                            <li class="list-group-item bg-light">
+                                <div class="ml-2 my-1 media d-flex align-items-center">
+                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <div class="media-body">
+                                        <blockquote class="blockquote-footer react-author mb-0">
+                                            @ali123
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <div class="row w-50 justify-content-center">
+                    <button
+                        type="submit"
+                        data-dismiss="modal"
+                        class="btn btn-outline-secondary btn-block love-submit">
+                            Love Quote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="comment-modal" class="modal react-modal fade text-dark">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-1 bg-transparent">
+            <div class="row align-items-center home-circle rounded-circle bg-light text-center mx-auto">
+                <div class="col">
+                    <i class="far fa-comment fa-3x home-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="modal-content modal-content-2 bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title lead ml-1">
+                    4 Comments
+                </h5>
+            </div>
+            <div class="modal-body pt-2 pb-1">
+                <div class="list-container">
+                    <div class="list-container-inner">
+                        <ul class="list-group mb-2">
+                            <li class="list-group-item bg-light">
+                                <div class="ml-2 my-1 media d-flex align-items-center">
+                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <div class="media-body">
+                                        <blockquote class="blockquote-footer react-author mb-0">
+                                            @ali-ahmed
+                                        </blockquote>
+                                        Let's have fun bro ;)
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Write your comment...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary comment-submit" type="button" data-dismiss="modal">Comment</button>
+                    </div>
                 </div>
             </div>
         </div>

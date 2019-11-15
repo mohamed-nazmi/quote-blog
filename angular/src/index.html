@@ -27,7 +27,8 @@
         crossorigin="anonymous"></script>
 
         <script>
-            $(document).on('hidden.bs.modal','#writeModal', function () {
+            // Reset modal forms
+            $(document).on('hidden.bs.modal','#quote-modal ', function () {
                 $(this).find('form').trigger('reset');
             });
         </script>
