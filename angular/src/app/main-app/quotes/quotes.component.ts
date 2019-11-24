@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Quote } from './quotes.model';
 import { QuotesService } from './quotes.service';
+import { AuthService } from '../../index/auth.service';
 
 @Component({
     selector: 'app-quotes',
@@ -10,12 +11,13 @@ import { QuotesService } from './quotes.service';
     styleUrls: ['./quotes.component.css']
 })
 export class QuotesComponent implements OnInit, OnDestroy {
-    selectedHeart: number;
-
     quotes: Quote[];
     private quotesSub: Subscription;
 
-    constructor(private quotesService: QuotesService) { }
+    isUserAuth = false;
+    private isAuthSub: Subscription;
+
+    constructor(private quotesService: QuotesService, private authService: AuthService) { }
 
     ngOnInit() {
         this.quotesService.getQuotes();
@@ -23,10 +25,16 @@ export class QuotesComponent implements OnInit, OnDestroy {
             .subscribe(quotes => {
                 this.quotes = quotes;
             });
+        this.isUserAuth = this.authService.getIsAuth();
+        this.isAuthSub = this.authService.getIsAuthListener()
+            .subscribe(isAuth => {
+                this.isUserAuth = isAuth;
+            });
     }
 
     ngOnDestroy() {
         this.quotesSub.unsubscribe();
+        this.isAuthSub.unsubscribe();
     }
 
     deleteQuote(quoteId: string) {

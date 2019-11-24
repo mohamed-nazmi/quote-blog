@@ -1,18 +1,18 @@
 #quote-section .quote-block {
     padding: 0px 5px 2px;
-    margin-bottom: 12px;
+    margin-bottom: 7px;
 }
 
 #quote-section .quote-card {
     position: relative;
-    bottom: 40px;
+    bottom: 42px;
 }
 
 #quote-section .quote-image {
     position: relative;
     z-index: 1;
-    width: 90px;
-    height: 90px;
+    width: 84px;
+    height: 84px;
 }
 
 #quote-section .quote-header {
@@ -21,21 +21,23 @@
 }
 
 #quote-section .quote-body {
-    padding-top: 24px;
+    padding-top: 16px;
     padding-bottom: 2px !important;
 }
 
 #quote-section .quote-text {
-    font-size: 1rem;
+    font-size: 0.96rem;
     font-weight: 400;
+    line-height: 1.55;
 }
 
 #quote-section .quote-author {
+    padding: 8px 20px;
     border: none !important;
 }
 
 #quote-section .blockquote-footer {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
 }
 
 #quote-section .quote-reacts {
@@ -44,51 +46,51 @@
 
 @media (min-width: 0px) {
     #quote-section .quote-block {
-        height: 437px;
+        height: 386px;
     }
 
     #quote-section .quote-card {
-        height: 385px;
+        height: 336px;
     }
 }
 
 @media (min-width: 576px) {
     #quote-section .quote-block {
-        height: 482px;
+        height: 450px;
     }
 
     #quote-section .quote-card {
-        height: 430px;
+        height: 400px;
     }
 }
 
 @media (min-width: 768px) {
     #quote-section .quote-block {
-        height: 437px;
+        height: 404px;
     }
 
     #quote-section .quote-card {
-        height: 385px;
+        height: 354px;
     }
 }
 
 @media (min-width: 992px) {
     #quote-section .quote-block {
-        height: 460px;
+        height: 408px;
     }
 
     #quote-section .quote-card {
-        height: 408px;
+        height: 358px;
     }
 }
 
 @media (min-width: 1200px) {
     #quote-section .quote-block {
-        height: 423px;
+        height: 388px;
     }
 
     #quote-section .quote-card {
-        height: 370px;
+        height: 338px;
     }
 }
 

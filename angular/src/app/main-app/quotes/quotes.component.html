@@ -1,42 +1,47 @@
 <div id="quote-section" class="container">
-    <div class="row">
-        <div class="col-sm-6 col-lg-4 text-center quote-block" *ngFor="let quote of quotes">
-            <img
-                class="quote-image rounded-circle"
-                src="../../../assets/images/men/man-pp.jpg"
-                alt="">
-            <div class="card quote-card">
-                <div class="card-header quote-header bg-transparent">
-                    <button class="close" type="button" data-toggle="dropdown">
-                        ...
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item pointer">Edit</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item pointer" (click)="deleteQuote(quote._id)">Delete</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 text-center quote-block" *ngFor="let quote of quotes">
+                <img
+                    class="quote-image rounded-circle"
+                    src="../../../assets/images/men/man-pp.jpg"
+                    alt="">
+                <div class="card quote-card">
+                    <div class="card-header quote-header bg-transparent">
+                        <button *ngIf="isUserAuth" class="close" type="button" data-toggle="dropdown">
+                            ...
+                        </button>
+                        <div *ngIf="!isUserAuth">
+                            &nbsp;
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item pointer">Edit</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item pointer" (click)="deleteQuote(quote._id)">Delete</a>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body quote-body mx-1">
-                    <h6 class="card-title"><i class="fa fa-quote-left"></i></h6>
-                    <p class="card-text quote-text lead">
-                        {{ quote.content }}
-                    </p>
-                    <h6 class="card-title"><i class="fa fa-quote-right"></i></h6>
-                </div>
-                <div class="card-footer quote-author bg-transparent">
-                    <blockquote class="blockquote-footer text-right">
-                        @{{ quote.author }}
-                    </blockquote>
-                </div>
-                <div class="card-footer quote-reacts text-left bg-transparent">
-                    <i
-                        class="far fa-heart fa-lg pointer ml-1 mr-2"
-                        data-toggle="modal"
-                        data-target="#love-modal"></i>
-                    <i
-                        class="far fa-comment fa-lg pointer ml-1"
-                        data-toggle="modal"
-                        data-target="#comment-modal"></i>
+                    <div class="card-body quote-body mx-1">
+                        <h6 class="card-title"><i class="fa fa-quote-left"></i></h6>
+                        <p class="card-text quote-text lead">
+                            {{ quote.content }}
+                        </p>
+                        <h6 class="card-title mb-1"><i class="fa fa-quote-right"></i></h6>
+                    </div>
+                    <div class="card-footer quote-author bg-transparent">
+                        <blockquote class="blockquote-footer text-right">
+                            @{{ quote.author }}
+                        </blockquote>
+                    </div>
+                    <div class="card-footer quote-reacts text-left bg-transparent">
+                        <i
+                            class="far fa-heart fa-lg pointer ml-1 mr-2"
+                            data-toggle="modal"
+                            data-target="#love-modal"></i>
+                        <i
+                            class="far fa-comment fa-lg pointer ml-1"
+                            data-toggle="modal"
+                            data-target="#comment-modal"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,6 +67,36 @@
                 <div class="list-container">
                     <div class="list-container-inner">
                         <ul class="list-group mb-2">
+                            <li class="list-group-item bg-light">
+                                <div class="ml-2 my-1 media d-flex align-items-center">
+                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <div class="media-body">
+                                        <blockquote class="blockquote-footer react-author mb-0">
+                                            @ali123
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <div class="ml-2 my-1 media d-flex align-items-center">
+                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <div class="media-body">
+                                        <blockquote class="blockquote-footer react-author mb-0">
+                                            @ali123
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <div class="ml-2 my-1 media d-flex align-items-center">
+                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <div class="media-body">
+                                        <blockquote class="blockquote-footer react-author mb-0">
+                                            @ali123
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </li>
                             <li class="list-group-item bg-light">
                                 <div class="ml-2 my-1 media d-flex align-items-center">
                                     <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">

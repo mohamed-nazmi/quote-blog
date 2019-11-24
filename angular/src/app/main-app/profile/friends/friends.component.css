@@ -7,7 +7,7 @@
 }
 
 #friends-section .friend-block {
-    height: 266px;
+    height: 252px;
     padding: 0px 5px;
     margin-bottom: 16px;
 }
@@ -15,14 +15,14 @@
 #friends-section .friend-card {
     position: relative;
     bottom: 40px;
-    height: 214px;
+    height: 208px;
 }
 
 #friends-section .friend-image {
     position: relative;
     z-index: 1;
-    width: 90px;
-    height: 90px;
+    width: 84px;
+    height: 84px;
 }
 
 #friends-section .friend-header {
@@ -45,6 +45,6 @@
 }
 
 #friends-section .friend-description {
-    font-size: 1rem;
+    font-size: 0.98rem;
     font-weight: 400;
 }

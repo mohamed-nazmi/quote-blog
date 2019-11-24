@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { ProfileComponent } from './main-app/profile/profile.component';
 import { HomeComponent } from './main-app/home/home.component';
 import { QuotesComponent } from './main-app/quotes/quotes.component';
 import { FriendsComponent } from './main-app/profile/friends/friends.component';
+import { AuthInterceptor } from './index/auth-interceptor';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,11 @@ import { FriendsComponent } from './main-app/profile/friends/friends.component';
         FormsModule,
         ReactiveFormsModule
     ],
-    providers: [],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+    }],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

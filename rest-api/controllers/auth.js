@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -29,10 +30,16 @@ exports.postSignup = (req, res, next) => {
             });
             return user.save();
         })
-        .then(() => {
+        .then(user => {
+            const token = jwt.sign(
+                { email: user.email, userId: user._id },
+                'asupersuperlongsecretkey',
+                { expiresIn: '1h' }
+            );
             res.status(201).json({
-                message: 'User created!'
-            })
+                token: token,
+                expiresIn: 3600
+            });
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -73,8 +80,15 @@ exports.postLogin = (req, res, next) => {
                 error.data = 'Invalid user or password.'
                 throw error;
             }
-            // generate auth token for the fetchedUser ..
-            res.status(200).json({ });
+            const token = jwt.sign(
+                { email: fetchedUser.email, userId: fetchedUser._id },
+                'asupersuperlongsecretkey',
+                { expiresIn: '1h' }
+            );
+            res.status(200).json({
+                token: token,
+                expiresIn: 3600
+            });
         })
         .catch(err => {
             if (!err.statusCode) {

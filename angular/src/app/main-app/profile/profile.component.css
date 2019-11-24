@@ -6,7 +6,7 @@
 }
 
 #profile-section .home-inner {
-    padding-top: 90px;
+    padding-top: 88px;
 }
 
 #profile-section .profile-image {
@@ -23,10 +23,6 @@
     font-size: 1.08rem;
 }
 
-#profile-section .profile-longer-btn {
-    padding: 6px 42px;
-}
-
 #profile-section .profile-button {
     border-color: rgb(78, 10, 114) !important;
     color: rgb(78, 10, 114) !important;
@@ -34,14 +30,25 @@
     font-weight: 400;
 }
 
+#profile-section .text-button {
+    padding: 7px 24px;
+}
+
 #profile-section .profile-button:hover,
 #profile-section .profile-button-active {
     border-color: rgb(78, 10, 114) !important;
     background-color: rgb(78, 10, 114) !important;
-    color: #fff !important;
+    color: rgb(212, 194, 194) !important;
     font-weight: 400;
     outline: none;
     box-shadow: none;
+}
+
+#profile-section .menu-line {
+    width: 26px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: rgb(212, 194, 194);
 }
 
 #quote-modal .modal-dialog {
@@ -58,7 +65,7 @@
 
 #quote-modal .modal-header {
     padding-top: 36px;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
 }
 
 #quote-modal .card,

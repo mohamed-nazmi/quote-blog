@@ -1,13 +1,14 @@
 const express = require('express');
 
 const quoteController = require('../controllers/quote');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
 router.get('/quotes', quoteController.getQuotes);
 
-router.post('/quote', quoteController.addQuote);
+router.post('/quote', isAuth, quoteController.addQuote);
 
-router.delete('/quote/:quoteId', quoteController.deleteQuote);
+router.delete('/quote/:quoteId', isAuth, quoteController.deleteQuote);
 
 module.exports = router;

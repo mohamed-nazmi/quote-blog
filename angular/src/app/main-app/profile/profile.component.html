@@ -10,22 +10,27 @@
                     @frank-damon12
                 </span>
                 <div class="mt-3">
-                    <div class="btn-group">
-                        <button data-toggle="modal" data-target="#quote-modal" class="btn profile-button px-3"><i class="fas fa-plus text-white"></i></button>
-                        <button (click)="viewQuotesSection()" class="btn profile-button mr-2 px-4" [class.profile-button-active]="viewQuotes">View Quotes</button>
+                    <button (click)="viewQuotesSection()" class="btn profile-button text-button" [class.profile-button-active]="viewQuotes">View Quotes</button>
+                    <button (click)="viewFriendsSection()" class="btn profile-button text-button ml-2" [class.profile-button-active]="!viewQuotes">View Friends</button>
+                    <button *ngIf="isUserAuth" class="btn profile-button ml-2" type="button" data-toggle="dropdown">
+                        <div class="menu-line rounded"></div>
+                        <div class="menu-line rounded"></div>
+                        <div class="menu-line rounded"></div>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a data-toggle="modal" data-target="#quote-modal" class="dropdown-item pointer">Add Quote</a>
                     </div>
-                    <button (click)="viewFriendsSection()" class="btn profile-button profile-longer-btn" [class.profile-button-active]="!viewQuotes">View Friends</button>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<section>
-    <div class="container mt-3 mb-2" *ngIf="viewQuotes">
+<section class="container mt-3 mb-2">
+    <div *ngIf="viewQuotes">
         <app-quotes></app-quotes>
     </div>
-    <div class="container mt-3 mb-2" *ngIf="!viewQuotes">
+    <div *ngIf="!viewQuotes">
         <app-friends></app-friends>
     </div>
 </section>
@@ -52,7 +57,7 @@
                                     formControlName="newQuote"
                                     type="text"
                                     class="form-control bg-light lead"
-                                    placeholder="Quote..."
+                                    placeholder="Write your quote..."
                                     rows="3"></textarea>
                             </div>
                             <h6 class="card-title mb-2"><i class="fa fa-quote-right"></i></h6>
