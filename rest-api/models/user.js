@@ -22,7 +22,11 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    quotes:  [{
+        type: Schema.Types.ObjectId,
+        ref: 'Quote'
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/quotes', quoteController.getQuotes);
 
+router.get('/quotes/:userId', quoteController.getQuotesByUserId);
+
 router.post('/quote', isAuth, quoteController.addQuote);
 
 router.delete('/quote/:quoteId', isAuth, quoteController.deleteQuote);

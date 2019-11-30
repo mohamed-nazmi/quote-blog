@@ -8,10 +8,10 @@
                     alt="">
                 <div class="card quote-card">
                     <div class="card-header quote-header bg-transparent">
-                        <button *ngIf="isUserAuth" class="close" type="button" data-toggle="dropdown">
+                        <button *ngIf="isUserAuth && userId === quote.authorId" class="close" type="button" data-toggle="dropdown">
                             ...
                         </button>
-                        <div *ngIf="!isUserAuth">
+                        <div *ngIf="!isUserAuth || userId !== quote.authorId">
                             &nbsp;
                         </div>
                         <div class="dropdown-menu">
@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-footer quote-author bg-transparent">
                         <blockquote class="blockquote-footer text-right">
-                            @{{ quote.author }}
+                            @{{ quote.signature }}
                         </blockquote>
                     </div>
                     <div class="card-footer quote-reacts text-left bg-transparent">

@@ -32,13 +32,14 @@ exports.postSignup = (req, res, next) => {
         })
         .then(user => {
             const token = jwt.sign(
-                { email: user.email, userId: user._id },
+                { username: user.username, userId: user._id },
                 'asupersuperlongsecretkey',
                 { expiresIn: '1h' }
             );
             res.status(201).json({
                 token: token,
-                expiresIn: 3600
+                expiresIn: 3600,
+                userId: user._id
             });
         })
         .catch(err => {
@@ -81,13 +82,14 @@ exports.postLogin = (req, res, next) => {
                 throw error;
             }
             const token = jwt.sign(
-                { email: fetchedUser.email, userId: fetchedUser._id },
+                { username: fetchedUser.username, userId: fetchedUser._id },
                 'asupersuperlongsecretkey',
                 { expiresIn: '1h' }
             );
             res.status(200).json({
                 token: token,
-                expiresIn: 3600
+                expiresIn: 3600,
+                userId: fetchedUser._id
             });
         })
         .catch(err => {

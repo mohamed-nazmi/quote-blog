@@ -19,6 +19,14 @@ export class QuotesService {
             });
     }
 
+    getQuotesByUserId(userId: string) {
+        this.http.get<{ quotes: Quote[] }>('http://localhost:3000/quotes/' + userId)
+            .subscribe(result => {
+                this.quotes = result.quotes;
+                this.quotesUpdated.next([...this.quotes]);
+            });
+    }
+
     getQuoteUpdateListener() {
         return this.quotesUpdated.asObservable();
     }

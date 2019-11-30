@@ -8,11 +8,16 @@ const quoteSchema = new Schema({
         required: true
     },
     author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    signature: {
         type: String,
         required: true
     },
     lovers: {
-        type: [String],
+        type: [Schema.Types.ObjectId],
         required: true
     }
 });

@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
     })
 });
 
-const MONGODB_URI = 'mongodb+srv://mnazmi:HvGMsyu29fXUOvOD@cluster0-rbjdo.mongodb.net/socialnetwork';
+const MONGODB_URI = 'mongodb+srv://mnazmi:HvGMsyu29fXUOvOD@cluster0-rbjdo.mongodb.net/quoteblog';
 
 mongoose
     .connect(
