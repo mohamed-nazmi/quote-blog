@@ -16,9 +16,8 @@ exports.getQuotes = (req, res, next) => {
         });
 };
 
-exports.getQuotesByUserId = (req, res, next) => {
-    const userId = req.params.userId;
-    User.findById(userId)
+exports.getQuotesByUsername = (req, res, next) => {
+    User.findOne({ username: req.params.username })
         .then(user => {
             return user.populate('quotes').execPopulate();
         })

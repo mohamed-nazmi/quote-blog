@@ -39,7 +39,8 @@ exports.postSignup = (req, res, next) => {
             res.status(201).json({
                 token: token,
                 expiresIn: 3600,
-                userId: user._id
+                userId: user._id,
+                username: user.username
             });
         })
         .catch(err => {
@@ -89,7 +90,8 @@ exports.postLogin = (req, res, next) => {
             res.status(200).json({
                 token: token,
                 expiresIn: 3600,
-                userId: fetchedUser._id
+                userId: fetchedUser._id,
+                username: fetchedUser.username
             });
         })
         .catch(err => {

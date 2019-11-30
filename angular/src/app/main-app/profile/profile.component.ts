@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { ProfileInfo } from './profile.model';
 import { QuotesService } from '../quotes/quotes.service';
 import { AuthService } from '../../index/auth.service';
+import { ProfileService } from './profile.service';
 
 @Component({
     selector: 'app-profile',
@@ -14,8 +17,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     viewQuotes: boolean;
     isUserAuth = false;
     private isAuthSub: Subscription;
+    username: string;
 
-    constructor(private quotesService: QuotesService, private authService: AuthService) { }
+    profileInfo: ProfileInfo = null;
+    private profileSub: Subscription;
+
+    constructor(
+        private profileService: ProfileService,
+        private quotesService: QuotesService,
+        private authService: AuthService,
+        private route: ActivatedRoute) { }
 
     newQuoteForm = new FormGroup({
         newQuote: new FormControl('', Validators.required)
@@ -23,15 +34,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.viewQuotes = true;
+        this.username = this.authService.getUsername();
+
         this.isUserAuth = this.authService.getIsAuth();
         this.isAuthSub = this.authService.getIsAuthListener()
             .subscribe(isAuth => {
                 this.isUserAuth = isAuth;
+                this.username = this.authService.getUsername();
             });
+
+        this.route.paramMap.subscribe(params => {
+            this.profileService.getProfileInfo(params.get('username'));
+            this.profileSub = this.profileService.getProfileUpdateListener()
+            .subscribe(profileInfo => {
+                this.profileInfo = profileInfo;
+            });
+        });
     }
 
     ngOnDestroy() {
         this.isAuthSub.unsubscribe();
+        this.profileSub.unsubscribe();
     }
 
     get newQuote() {

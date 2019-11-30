@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/quotes', quoteController.getQuotes);
 
-router.get('/quotes/:userId', quoteController.getQuotesByUserId);
+router.get('/quotes/:username', quoteController.getQuotesByUsername);
 
 router.post('/quote', isAuth, quoteController.addQuote);
 

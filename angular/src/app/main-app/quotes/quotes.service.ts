@@ -19,8 +19,8 @@ export class QuotesService {
             });
     }
 
-    getQuotesByUserId(userId: string) {
-        this.http.get<{ quotes: Quote[] }>('http://localhost:3000/quotes/' + userId)
+    getQuotesByUsername(username: string) {
+        this.http.get<{ quotes: Quote[] }>('http://localhost:3000/quotes/' + username)
             .subscribe(result => {
                 this.quotes = result.quotes;
                 this.quotesUpdated.next([...this.quotes]);

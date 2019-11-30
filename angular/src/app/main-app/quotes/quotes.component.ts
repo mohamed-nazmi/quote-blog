@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Quote } from './quotes.model';
@@ -19,7 +19,11 @@ export class QuotesComponent implements OnInit, OnDestroy {
     private isAuthSub: Subscription;
     private userId: string;
 
-    constructor(private quotesService: QuotesService, private authService: AuthService, private router: Router) { }
+    constructor(
+        private quotesService: QuotesService,
+        private authService: AuthService,
+        private router: Router,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.userId = this.authService.getUserId();
@@ -29,12 +33,14 @@ export class QuotesComponent implements OnInit, OnDestroy {
                 .subscribe(quotes => {
                     this.quotes = quotes;
                 });
-        } else if (this.router.url === '/in/profile') {
-            this.quotesService.getQuotesByUserId(this.userId);
-            this.quotesSub = this.quotesService.getQuoteUpdateListener()
+        } else {
+            this.route.paramMap.subscribe(params => {
+                this.quotesService.getQuotesByUsername(params.get('username'));
+                this.quotesSub = this.quotesService.getQuoteUpdateListener()
                 .subscribe(quotes => {
                     this.quotes = quotes;
                 });
+            });
         }
 
         this.isUserAuth = this.authService.getIsAuth();

@@ -1,13 +1,13 @@
 <header id="profile-section">
     <div class="dark-overlay">
         <div class="home-inner container">
-            <div class="text-center">
+            <div class="text-center" *ngIf="profileInfo">
                 <img class="profile-image rounded-circle" src="../../../assets/images/men/man-pp.jpg">
                 <h1 class="mt-2 text-white display-4 profile-fullname mb-1">
-                    Frank <strong>Damon</strong>
+                    {{ profileInfo.firstname }} <strong>{{ profileInfo.lastname }}</strong>
                 </h1>
                 <span class="blockquote-footer profile-username mb-2">
-                    @frank-damon12
+                    @{{ profileInfo.username }}
                 </span>
                 <div class="mt-3">
                     <button (click)="viewQuotesSection()" class="btn profile-button text-button" [class.profile-button-active]="viewQuotes">View Quotes</button>
@@ -26,7 +26,7 @@
     </div>
 </header>
 
-<section class="container mt-3 mb-2">
+<section class="container mt-3 mb-2" *ngIf="profileInfo">
     <div *ngIf="viewQuotes">
         <app-quotes></app-quotes>
     </div>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="card-footer bg-light">
                             <blockquote class="blockquote-footer text-right mb-2">
-                                @frank-damon12
+                                @{{ username }}
                             </blockquote>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 const quoteRoutes = require('./routes/quote');
 
 const app = express();
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use(profileRoutes);
 app.use(quoteRoutes);
 
 app.use((error, req, res, next) => {

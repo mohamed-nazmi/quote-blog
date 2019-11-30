@@ -10,7 +10,7 @@
                     <a routerLink="/in" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item mx-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a routerLink="/in/profile" class="nav-link">Profile</a>
+                    <a [routerLink]="['/in', username]" class="nav-link">Profile</a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link pointer" (click)="onLogout()">Logout</a>
