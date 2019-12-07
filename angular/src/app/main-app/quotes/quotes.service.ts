@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { Quote } from './quotes.model';
+import { environment } from '../../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class QuotesService {
@@ -12,7 +15,7 @@ export class QuotesService {
     constructor(private http: HttpClient) { }
 
     getQuotes() {
-        this.http.get<{ quotes: Quote[] }>('http://localhost:3000/quotes')
+        this.http.get<{ quotes: Quote[] }>(BACKEND_URL + '/quotes')
             .subscribe(result => {
                 this.quotes = result.quotes.reverse();
                 this.quotesUpdated.next([...this.quotes]);
@@ -20,7 +23,7 @@ export class QuotesService {
     }
 
     getQuotesByUsername(username: string) {
-        this.http.get<{ quotes: Quote[] }>('http://localhost:3000/quotes/' + username)
+        this.http.get<{ quotes: Quote[] }>(BACKEND_URL + '/quotes/' + username)
             .subscribe(result => {
                 this.quotes = result.quotes;
                 this.quotesUpdated.next([...this.quotes]);
@@ -33,7 +36,7 @@ export class QuotesService {
 
     addQuote(content: string) {
         this.http.post<{ quote: Quote }>(
-            'http://localhost:3000/quote',
+            BACKEND_URL + '/quote',
             {
                 content
             })
@@ -44,7 +47,7 @@ export class QuotesService {
     }
 
     deleteQuote(quoteId: string) {
-        this.http.delete('http://localhost:3000/quote/' + quoteId)
+        this.http.delete(BACKEND_URL + '/quote/' + quoteId)
             .subscribe(() => {
                 this.quotes = this.quotes.filter(quote => quote._id !== quoteId);
                 this.quotesUpdated.next([...this.quotes]);

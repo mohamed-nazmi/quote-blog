@@ -26,6 +26,18 @@ const userSchema = new Schema({
     quotes:  [{
         type: Schema.Types.ObjectId,
         ref: 'Quote'
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    sentRequests: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    receivedRequests: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }]
 });
 

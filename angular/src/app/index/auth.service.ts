@@ -3,6 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private token: string;
@@ -41,7 +45,7 @@ export class AuthService {
 
     signup(newUser) {
         this.http.post<{ token: string, expiresIn: number, userId: string, username: string }>(
-            'http://localhost:3000/signup',
+            BACKEND_URL + '/signup',
             {
                 firstname: newUser.firstname,
                 lastname: newUser.lastname,
@@ -71,7 +75,7 @@ export class AuthService {
 
     login(user) {
         this.http.post<{ token: string, expiresIn: number, userId: string, username: string }>(
-            'http://localhost:3000/login',
+            BACKEND_URL + '/login',
             {
                 loginInfo: user.loginInfo,
                 password: user.password

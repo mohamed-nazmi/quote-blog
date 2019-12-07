@@ -46,15 +46,40 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.route.paramMap.subscribe(params => {
             this.profileService.getProfileInfo(params.get('username'));
             this.profileSub = this.profileService.getProfileUpdateListener()
+                .subscribe(profileInfo => {
+                    this.profileInfo = profileInfo;
+                });
+        });
+
+        this.profileSub = this.profileService.getProfileUpdateListener()
             .subscribe(profileInfo => {
                 this.profileInfo = profileInfo;
             });
-        });
     }
 
     ngOnDestroy() {
         this.isAuthSub.unsubscribe();
         this.profileSub.unsubscribe();
+    }
+
+    sendRequest(userId: string) {
+        this.profileService.sendFriendRequest(userId);
+    }
+
+    undoRequest(userId: string) {
+        this.profileService.undoFriendRequest(userId);
+    }
+
+    acceptRequest(userId: string) {
+        this.profileService.handleReceivedFriendRequest(userId, true);
+    }
+
+    declineRequest(userId: string) {
+        this.profileService.handleReceivedFriendRequest(userId, false);
+    }
+
+    removeFriend(userId: string) {
+        this.profileService.deleteFriend(userId);
     }
 
     get newQuote() {

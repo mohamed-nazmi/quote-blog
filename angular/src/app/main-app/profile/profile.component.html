@@ -18,7 +18,32 @@
                         <div class="menu-line rounded"></div>
                     </button>
                     <div class="dropdown-menu">
-                        <a data-toggle="modal" data-target="#quote-modal" class="dropdown-item pointer">Add Quote</a>
+                        <a
+                            *ngIf="profileInfo.relationship === 'Me'"
+                            data-toggle="modal"
+                            data-target="#quote-modal"
+                            class="dropdown-item pointer">Add Quote</a>
+                        <a
+                            *ngIf="profileInfo.relationship === 'None'"
+                            class="dropdown-item pointer"
+                            (click)="sendRequest(profileInfo.userId)">Add Friend</a>
+                        <a
+                            *ngIf="profileInfo.relationship === 'Sent'"
+                            class="dropdown-item pointer"
+                            (click)="undoRequest(profileInfo.userId)">Undo Request</a>
+                        <div *ngIf="profileInfo.relationship === 'Received'">
+                            <a
+                                class="dropdown-item pointer"
+                                (click)="acceptRequest(profileInfo.userId)">Accept Request</a>
+                            <div class="dropdown-divider"></div>
+                            <a
+                                class="dropdown-item pointer"
+                                (click)="declineRequest(profileInfo.userId)">Decline Request</a>
+                        </div>
+                        <a
+                            *ngIf="profileInfo.relationship === 'Friend'"
+                            class="dropdown-item pointer"
+                            (click)="removeFriend(profileInfo.userId)">Remove Friend</a>
                     </div>
                 </div>
             </div>
