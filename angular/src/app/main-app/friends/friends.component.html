@@ -24,27 +24,27 @@
     <div class="card-body friends-list">
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3 text-center friend-block" *ngFor="let friend of friends">
-                <img
+                <!-- <img
                     class="friend-image rounded-circle"
                     [src]="friend.image"
-                    alt="">
+                    alt=""> -->
                 <div class="card friend-card">
-                    <div class="card-header friend-header bg-transparent">
+                    <!-- <div class="card-header friend-header bg-transparent">
                         <button class="close" type="button" data-toggle="dropdown">
                             ...
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item pointer">Delete</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card-body friend-body">
-                        <div class="lead friend-fullname">{{ friend.fullname }}</div>
-                        <blockquote class="blockquote-footer friend-username">
+                        <div (click)="navigateTo(friend.username)" class="lead friend-fullname pointer">{{ friend.fullname }}</div>
+                        <blockquote (click)="navigateTo(friend.username)" class="blockquote-footer friend-username pointer">
                             @{{ friend.username }}
                         </blockquote>
-                        <p class="lead friend-description mb-1">
+                        <!-- <p class="lead friend-description mb-1">
                             {{ friend.description }}
-                        </p>
+                        </p> -->
                     </div>
                 </div>
             </div>

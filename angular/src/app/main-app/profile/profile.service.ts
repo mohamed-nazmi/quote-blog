@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { ProfileInfo } from './profile.model';
+import { FriendsService } from '../friends/friends.service';
 import { environment } from '../../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl;
@@ -12,7 +13,7 @@ export class ProfileService {
     private profileInfo: ProfileInfo;
     private profileUpdated = new Subject<ProfileInfo>();
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private friendsService: FriendsService) { }
 
     getProfileInfo(username: string) {
         this.http.get<{ profileInfo: ProfileInfo }>(BACKEND_URL + '/profile/' + username)
@@ -27,11 +28,7 @@ export class ProfileService {
     }
 
     sendFriendRequest(requestedFriendId: string) {
-        this.http.post(
-            BACKEND_URL + '/user/add-friend',
-            {
-                requestedFriendId
-            })
+        this.friendsService.sendFriendRequest(requestedFriendId)
             .subscribe(() => {
                 this.profileInfo.relationship = 'Sent';
                 this.profileUpdated.next(this.profileInfo);
@@ -39,27 +36,20 @@ export class ProfileService {
     }
 
     undoFriendRequest(requestedFriendId: string) {
-        this.http.post(
-            BACKEND_URL + '/user/undo-request',
-            {
-                requestedFriendId
-            })
-            .subscribe(result => {
+        this.friendsService.undoFriendRequest(requestedFriendId)
+            .subscribe(() => {
                 this.profileInfo.relationship = 'None';
                 this.profileUpdated.next(this.profileInfo);
             });
     }
 
     handleReceivedFriendRequest(requestedFriendId: string, doAccept: boolean) {
-        this.http.post(
-            BACKEND_URL + '/user/handle-received-request',
-            {
-                requestedFriendId,
-                doAccept
-            })
-            .subscribe(result => {
+        this.friendsService.handleReceivedFriendRequest(requestedFriendId, doAccept)
+            .subscribe(() => {
                 if (doAccept) {
                     this.profileInfo.relationship = 'Friend';
+                    const username = this.profileInfo.username;
+                    this.friendsService.getFriendsByUsername(username);
                 } else {
                     this.profileInfo.relationship = 'None';
                 }
@@ -68,9 +58,11 @@ export class ProfileService {
     }
 
     deleteFriend(friendId: string) {
-        this.http.delete(BACKEND_URL + '/user/delete-friend/' + friendId)
-            .subscribe(result => {
+        this.friendsService.deleteFriend(friendId)
+            .subscribe(() => {
                 this.profileInfo.relationship = 'None';
+                const username = this.profileInfo.username;
+                this.friendsService.getFriendsByUsername(username);
                 this.profileUpdated.next(this.profileInfo);
             });
     }

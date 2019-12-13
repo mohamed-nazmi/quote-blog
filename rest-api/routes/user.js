@@ -15,4 +15,10 @@ router.post('/user/handle-received-request', isAuth, userController.handleFriend
 
 router.delete('/user/delete-friend/:friendId', isAuth, userController.removeFriend);
 
+router.get('/friends/:username', userController.getFriendsByUsername);
+
+router.get('/sent-requests', isAuth, userController.getUserSentRequests);
+
+router.get('/received-requests', isAuth, userController.getUserReceivedRequests);
+
 module.exports = router;

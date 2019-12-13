@@ -48,6 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.profileSub = this.profileService.getProfileUpdateListener()
                 .subscribe(profileInfo => {
                     this.profileInfo = profileInfo;
+                    this.viewQuotesSection();
                 });
         });
 

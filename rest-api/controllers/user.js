@@ -157,7 +157,7 @@ exports.handleFriendRequest = (req, res, next) => {
             requestedFriend.sentRequests = updatedSentRequests;
 
             if (doAccept) {
-                requestedFriend.friends.push(req.user);
+                requestedFriend.friends.unshift(req.user);
             }
             return requestedFriend.save();
         })
@@ -166,7 +166,7 @@ exports.handleFriendRequest = (req, res, next) => {
             req.user.receivedRequests = updatedReceivedRequests;
 
             if (doAccept) {
-                req.user.friends.push(requestedFriend);
+                req.user.friends.unshift(requestedFriend);
             }
             return req.user.save();
         })
@@ -232,6 +232,58 @@ exports.removeFriend = (req, res, next) => {
         });
 };
 
+exports.getFriendsByUsername = (req, res, next) => {
+    User.findOne({ username: req.params.username })
+        .then(user => {
+            return user.populate('friends').execPopulate();
+        })
+        .then(user => {
+            res.status(200).json({
+                friends: mapFriendsInResponse(user.friends)
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
+exports.getUserSentRequests = (req, res, next) => {
+    req.user
+        .populate('sentRequests')
+        .execPopulate()
+        .then(user => {
+            res.status(200).json({
+                sentRequests: mapFriendsInResponse(user.sentRequests)
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
+exports.getUserReceivedRequests = (req, res, next) => {
+    req.user
+        .populate('receivedRequests')
+        .execPopulate()
+        .then(user => {
+            res.status(200).json({
+                receivedRequests: mapFriendsInResponse(user.receivedRequests)
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
 determineRelationship = (currentUser, fetchedUser) => {
     let relationship;
 
@@ -248,4 +300,21 @@ determineRelationship = (currentUser, fetchedUser) => {
     }
 
     return relationship;
+};
+
+mapOneFriendInResponse = friend => {
+    const friendInResponse = {
+        _id: friend._id,
+        fullname: friend.firstname.concat(' ', friend.lastname),
+        username: friend.username,
+        // description: friend.description
+    };
+    return friendInResponse
+};
+
+mapFriendsInResponse = friends => {
+    const friendsInResponse = friends.map(friend => {
+        return mapOneFriendInResponse(friend);
+    });
+    return friendsInResponse;
 };
