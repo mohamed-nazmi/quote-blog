@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 const Quote = require('../models/quote');
 const User = require('../models/user');
 
@@ -35,6 +37,14 @@ exports.getQuotesByUsername = (req, res, next) => {
 };
 
 exports.addQuote = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed!');
+        error.statusCode = 422;
+        error.data = errors.array()[0].msg;
+        throw error;
+    }
+
     const content = req.body.content;
     const author = req.user;
     const signature = req.user.username;
@@ -47,15 +57,10 @@ exports.addQuote = (req, res, next) => {
         lovers
     });
 
-    let newQuote;
     quote.save()
         .then(quote => {
-            newQuote = quote;
-            return User.findById(req.user);
-        })
-        .then(user => {
-            user.quotes.unshift(newQuote);
-            return user.save();
+            req.user.quotes.unshift(quote);
+            return req.user.save();
         })
         .then(() => {
             res.status(201).json({
@@ -79,11 +84,8 @@ exports.deleteQuote = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-            return User.findById(req.user);
-        })
-        .then(user => {
-            user.quotes = user.quotes.filter(quote => quote._id.toString() !== quoteId);
-            return user.save();
+            req.user.quotes = req.user.quotes.filter(quote => quote._id.toString() !== quoteId);
+            return req.user.save();
         })
         .then(() => {
             res.status(200).json({ message: 'Successful deletion!' });

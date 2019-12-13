@@ -71,9 +71,9 @@
             </div>
             <form [formGroup]="newQuoteForm">
                 <div class="modal-body pt-2 pb-1">
-                    <!-- <div class="alert alert-danger text-center">
-                        Quote through 128 characters!
-                    </div> -->
+                    <div *ngIf="newQuoteForm.touched && newQuoteForm.invalid" class="alert alert-danger text-center">
+                        Quote through 120 characters
+                    </div>
                     <div class="card bg-light">
                         <div class="card-body text-center p-2">
                             <h6 class="card-title mb-1"><i class="fa fa-quote-left"></i></h6>

@@ -29,7 +29,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute) { }
 
     newQuoteForm = new FormGroup({
-        newQuote: new FormControl('', Validators.required)
+        newQuote: new FormControl('', [
+            Validators.required,
+            Validators.maxLength(120)
+        ])
     });
 
     ngOnInit() {
