@@ -125,6 +125,56 @@ exports.deleteQuote = (req, res, next) => {
         });
 };
 
+exports.loveQuote = (req, res, next) => {
+    const quoteId = req.params.quoteId;
+    Quote.findById(quoteId)
+        .then(quote => {
+            if (quote.lovers.includes(req.user._id)) {
+                const error = new Error('Already loved!');
+                error.statusCode = 409;
+                throw error;
+            }
+            quote.lovers.unshift(req.user);
+            return quote.save();
+        })
+        .then(() => {
+            res.status(201).json({
+                lover: { username: req.user.username }
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
+exports.unloveQuote = (req, res, next) => {
+    const quoteId = req.params.quoteId;
+    Quote.findById(quoteId)
+        .then(quote => {
+            if (!quote.lovers.includes(req.user._id)) {
+                const error = new Error('Already unloved!');
+                error.statusCode = 409;
+                throw error;
+            }
+            quote.lovers = quote.lovers.filter(lover => lover._id.toString() != req.user._id.toString());
+            return quote.save();
+        })
+        .then(() => {
+            res.status(201).json({
+                unlover: { username: req.user.username }
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
 mapOneQuoteInResponse = quote => {
     const quoteInResponse = {
         _id: quote._id,

@@ -68,6 +68,24 @@ export class QuotesService {
             });
     }
 
+    loveQuote(quoteId: string) {
+        this.http.post<{ lover: Lover }>(BACKEND_URL + '/love-quote/' + quoteId, { })
+            .subscribe(result => {
+                this.lovers.unshift(result.lover);
+                this.loversUpdated.next([...this.lovers]);
+                this.isLovedByUserUpdated.next(true);
+            });
+    }
+
+    unloveQuote(quoteId: string) {
+        this.http.post<{ unlover: Lover }>(BACKEND_URL + '/unlove-quote/' + quoteId, { })
+            .subscribe(result => {
+                this.lovers = this.lovers.filter(lover => lover.username !== result.unlover.username);
+                this.loversUpdated.next([...this.lovers]);
+                this.isLovedByUserUpdated.next(false);
+            });
+    }
+
     deleteQuote(quoteId: string) {
         this.http.delete(BACKEND_URL + '/quote/' + quoteId)
             .subscribe(() => {

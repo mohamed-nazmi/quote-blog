@@ -85,4 +85,12 @@ export class QuotesComponent implements OnInit, OnDestroy {
         this.currentQuoteId = quoteId;
         this.quotesService.getQuoteLovers(quoteId);
     }
+
+    loveQuote(quoteId: string) {
+        this.quotesService.loveQuote(quoteId);
+    }
+
+    unloveQuote(quoteId: string) {
+        this.quotesService.unloveQuote(quoteId);
+    }
 }

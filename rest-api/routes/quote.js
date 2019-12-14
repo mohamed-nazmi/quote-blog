@@ -25,4 +25,8 @@ router.get('/quote/lovers/:quoteId', isAuth, quoteController.getQuoteLovers);
 
 router.delete('/quote/:quoteId', isAuth, quoteController.deleteQuote);
 
+router.post('/love-quote/:quoteId', isAuth, quoteController.loveQuote);
+
+router.post('/unlove-quote/:quoteId', isAuth, quoteController.unloveQuote);
+
 module.exports = router;

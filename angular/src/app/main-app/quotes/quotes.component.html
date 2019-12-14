@@ -90,7 +90,6 @@
                     <button
                         *ngIf="!iscurrentQuoteLovedByUser"
                         type="submit"
-                        data-dismiss="modal"
                         class="btn btn-outline-secondary btn-block love-submit"
                         (click)="loveQuote(currentQuoteId)">
                             Love Quote
@@ -98,7 +97,6 @@
                     <button
                         *ngIf="iscurrentQuoteLovedByUser"
                         type="submit"
-                        data-dismiss="modal"
                         class="btn btn-outline-secondary btn-block love-submit"
                         (click)="unloveQuote(currentQuoteId)">
                             Unlove Quote
