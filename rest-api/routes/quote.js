@@ -23,6 +23,8 @@ router.post(
 
 router.get('/quote/lovers/:quoteId', isAuth, quoteController.getQuoteLovers);
 
+router.get('/quote/comments/:quoteId', isAuth, quoteController.getQuoteComments);
+
 router.delete('/quote/:quoteId', isAuth, quoteController.deleteQuote);
 
 router.post('/love-quote/:quoteId', isAuth, quoteController.loveQuote);

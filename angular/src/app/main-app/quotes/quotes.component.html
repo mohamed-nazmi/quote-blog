@@ -41,7 +41,8 @@
                         <i
                             class="far fa-comment fa-lg pointer ml-1"
                             data-toggle="modal"
-                            data-target="#comment-modal"></i>
+                            data-target="#comment-modal"
+                            (click)="fetchComments(quote._id)"></i>
                     </div>
                 </div>
             </div>
@@ -60,7 +61,10 @@
         </div>
         <div class="modal-content modal-content-2 bg-light">
             <div class="modal-header">
-                <h5 *ngIf="lovers.length" class="modal-title lead ml-1">
+                <h5 *ngIf="lovers.length === 1" class="modal-title lead ml-1">
+                    {{ lovers.length }} Love
+                </h5>
+                <h5 *ngIf="lovers.length > 1" class="modal-title lead ml-1">
                     {{ lovers.length }} Loves
                 </h5>
                 <h5 *ngIf="!lovers.length" class="modal-title lead ml-1">
@@ -118,22 +122,28 @@
         </div>
         <div class="modal-content modal-content-2 bg-light">
             <div class="modal-header">
-                <h5 class="modal-title lead ml-1">
-                    4 Comments
+                <h5 *ngIf="comments.length === 1" class="modal-title lead ml-1">
+                    {{ comments.length }} Comment
+                </h5>
+                <h5 *ngIf="comments.length > 1" class="modal-title lead ml-1">
+                    {{ comments.length }} Comments
+                </h5>
+                <h5 *ngIf="!comments.length" class="modal-title lead ml-1">
+                    1<sup>st</sup> Comment?
                 </h5>
             </div>
             <div class="modal-body pt-2 pb-1">
                 <div class="list-container">
                     <div class="list-container-inner">
                         <ul class="list-group mb-2">
-                            <li class="list-group-item bg-light">
+                            <li class="list-group-item bg-light" *ngFor="let comment of comments">
                                 <div class="ml-2 my-1 media d-flex align-items-center">
                                     <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
                                     <div class="media-body">
                                         <blockquote class="blockquote-footer react-author mb-0">
-                                            @ali-ahmed
+                                            @{{ comment.username }}
                                         </blockquote>
-                                        Let's have fun bro ;)
+                                        {{ comment.content }}
                                     </div>
                                 </div>
                             </li>
@@ -145,7 +155,9 @@
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Write your comment...">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary comment-submit" type="button" data-dismiss="modal">Comment</button>
+                        <button
+                            class="btn btn-outline-secondary comment-submit"
+                            type="button">Comment</button>
                     </div>
                 </div>
             </div>

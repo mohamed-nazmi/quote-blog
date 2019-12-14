@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { Quote } from './quotes.model';
-import { Lover } from './lovers.model';
+import { QuoteLover } from './quote-lovers.model';
+import { QuoteComment } from './quote-comments.model';
 import { environment } from '../../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl;
@@ -13,9 +14,12 @@ export class QuotesService {
     private quotes: Quote[] = [];
     private quotesUpdated = new Subject<Quote[]>();
 
-    lovers: Lover[];
-    private loversUpdated = new Subject<Lover[]>();
+    lovers: QuoteLover[];
+    private loversUpdated = new Subject<QuoteLover[]>();
     private isLovedByUserUpdated = new Subject<boolean>();
+
+    comments: QuoteComment[];
+    private commentsUpdated = new Subject<QuoteComment[]>();
 
     constructor(private http: HttpClient) { }
 
@@ -36,11 +40,19 @@ export class QuotesService {
     }
 
     getQuoteLovers(quoteId: string) {
-        this.http.get<{ lovers: Lover[], isLovedByUser: boolean }>(BACKEND_URL + '/quote/lovers/' + quoteId)
+        this.http.get<{ lovers: QuoteLover[], isLovedByUser: boolean }>(BACKEND_URL + '/quote/lovers/' + quoteId)
             .subscribe(result => {
                 this.lovers = result.lovers;
                 this.loversUpdated.next([...this.lovers]);
                 this.isLovedByUserUpdated.next(result.isLovedByUser);
+            });
+    }
+
+    getQuoteComments(quoteId: string) {
+        this.http.get<{ comments: QuoteComment[] }>(BACKEND_URL + '/quote/comments/' + quoteId)
+            .subscribe(result => {
+                this.comments = result.comments;
+                this.commentsUpdated.next([...this.comments]);
             });
     }
 
@@ -56,6 +68,10 @@ export class QuotesService {
         return this.isLovedByUserUpdated.asObservable();
     }
 
+    getCommentUpdateListener() {
+        return this.commentsUpdated.asObservable();
+    }
+
     addQuote(content: string) {
         this.http.post<{ quote: Quote }>(
             BACKEND_URL + '/quote',
@@ -69,7 +85,7 @@ export class QuotesService {
     }
 
     loveQuote(quoteId: string) {
-        this.http.post<{ lover: Lover }>(BACKEND_URL + '/love-quote/' + quoteId, { })
+        this.http.post<{ lover: QuoteLover }>(BACKEND_URL + '/love-quote/' + quoteId, { })
             .subscribe(result => {
                 this.lovers.unshift(result.lover);
                 this.loversUpdated.next([...this.lovers]);
@@ -78,7 +94,7 @@ export class QuotesService {
     }
 
     unloveQuote(quoteId: string) {
-        this.http.post<{ unlover: Lover }>(BACKEND_URL + '/unlove-quote/' + quoteId, { })
+        this.http.post<{ unlover: QuoteLover }>(BACKEND_URL + '/unlove-quote/' + quoteId, { })
             .subscribe(result => {
                 this.lovers = this.lovers.filter(lover => lover.username !== result.unlover.username);
                 this.loversUpdated.next([...this.lovers]);

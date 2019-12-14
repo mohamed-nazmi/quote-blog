@@ -100,7 +100,33 @@ exports.getQuoteLovers = (req, res, next) => {
             }
             next(err);
         });
-}
+};
+
+exports.getQuoteComments = (req, res, next) => {
+    const quoteId = req.params.quoteId;
+    Quote.findById(quoteId)
+        .then(quote => {
+            return quote.populate('comments.author').execPopulate();
+        })
+        .then(quote => {
+            const commentsInResponse = quote.comments.map(comment => {
+                return {
+                    _id: comment.author._id.toString(),
+                    username: comment.author.username,
+                    content: comment.content
+                };
+            });
+            res.status(200).json({
+                comments: commentsInResponse
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
 
 exports.deleteQuote = (req, res, next) => {
     const quoteId = req.params.quoteId;

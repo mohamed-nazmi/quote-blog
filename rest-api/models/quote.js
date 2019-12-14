@@ -19,6 +19,15 @@ const quoteSchema = new Schema({
     lovers: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    comments: [{
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        content: {
+            type: String
+        }
     }]
 });
 

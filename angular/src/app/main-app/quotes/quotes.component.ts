@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Quote } from './quotes.model';
-import { Lover } from './lovers.model';
+import { QuoteLover } from './quote-lovers.model';
+import { QuoteComment } from './quote-comments.model';
 import { QuotesService } from './quotes.service';
 import { AuthService } from '../../index/auth.service';
 
@@ -16,11 +17,15 @@ export class QuotesComponent implements OnInit, OnDestroy {
     quotes: Quote[];
     private quotesSub: Subscription;
 
-    lovers: Lover[] = [];
     currentQuoteId: string;
+
+    lovers: QuoteLover[] = [];
     iscurrentQuoteLovedByUser: boolean;
     private loversSub: Subscription;
     private isLovedByUserSub: Subscription;
+
+    comments: QuoteComment[];
+    private commentsSub: Subscription;
 
     isUserAuth = false;
     private isAuthSub: Subscription;
@@ -66,6 +71,11 @@ export class QuotesComponent implements OnInit, OnDestroy {
             .subscribe(isLoved => {
                 this.iscurrentQuoteLovedByUser = isLoved;
             });
+
+        this.commentsSub = this.quotesService.getCommentUpdateListener()
+            .subscribe(comments => {
+                this.comments = comments;
+            });
     }
 
     ngOnDestroy() {
@@ -73,6 +83,7 @@ export class QuotesComponent implements OnInit, OnDestroy {
         this.quotesSub.unsubscribe();
         this.loversSub.unsubscribe();
         this.isLovedByUserSub.unsubscribe();
+        this.commentsSub.unsubscribe();
     }
 
     deleteQuote(quoteId: string) {
@@ -92,5 +103,11 @@ export class QuotesComponent implements OnInit, OnDestroy {
 
     unloveQuote(quoteId: string) {
         this.quotesService.unloveQuote(quoteId);
+    }
+
+    fetchComments(quoteId: string) {
+        this.comments = [];
+        this.currentQuoteId = quoteId;
+        this.quotesService.getQuoteComments(quoteId);
     }
 }
