@@ -16,10 +16,10 @@ const quoteSchema = new Schema({
         type: String,
         required: true
     },
-    lovers: {
-        type: [Schema.Types.ObjectId],
-        required: true
-    }
+    lovers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model('Quote', quoteSchema);

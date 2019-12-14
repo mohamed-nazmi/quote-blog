@@ -36,7 +36,8 @@
                         <i
                             class="far fa-heart fa-lg pointer ml-1 mr-2"
                             data-toggle="modal"
-                            data-target="#love-modal"></i>
+                            data-target="#love-modal"
+                            (click)="fetchLovers(quote._id)"></i>
                         <i
                             class="far fa-comment fa-lg pointer ml-1"
                             data-toggle="modal"
@@ -59,50 +60,23 @@
         </div>
         <div class="modal-content modal-content-2 bg-light">
             <div class="modal-header">
-                <h5 class="modal-title lead ml-1">
-                    4 Loves
+                <h5 *ngIf="lovers.length" class="modal-title lead ml-1">
+                    {{ lovers.length }} Loves
+                </h5>
+                <h5 *ngIf="!lovers.length" class="modal-title lead ml-1">
+                    1<sup>st</sup> Love?
                 </h5>
             </div>
             <div class="modal-body pt-2 pb-1">
                 <div class="list-container">
                     <div class="list-container-inner">
                         <ul class="list-group mb-2">
-                            <li class="list-group-item bg-light">
+                            <li class="list-group-item bg-light" *ngFor="let lover of lovers">
                                 <div class="ml-2 my-1 media d-flex align-items-center">
                                     <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
                                     <div class="media-body">
                                         <blockquote class="blockquote-footer react-author mb-0">
-                                            @ali123
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-light">
-                                <div class="ml-2 my-1 media d-flex align-items-center">
-                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
-                                    <div class="media-body">
-                                        <blockquote class="blockquote-footer react-author mb-0">
-                                            @ali123
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-light">
-                                <div class="ml-2 my-1 media d-flex align-items-center">
-                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
-                                    <div class="media-body">
-                                        <blockquote class="blockquote-footer react-author mb-0">
-                                            @ali123
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-light">
-                                <div class="ml-2 my-1 media d-flex align-items-center">
-                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
-                                    <div class="media-body">
-                                        <blockquote class="blockquote-footer react-author mb-0">
-                                            @ali123
+                                            @{{ lover.username }}
                                         </blockquote>
                                     </div>
                                 </div>
@@ -114,10 +88,20 @@
             <div class="modal-footer justify-content-center">
                 <div class="row w-50 justify-content-center">
                     <button
+                        *ngIf="!iscurrentQuoteLovedByUser"
                         type="submit"
                         data-dismiss="modal"
-                        class="btn btn-outline-secondary btn-block love-submit">
+                        class="btn btn-outline-secondary btn-block love-submit"
+                        (click)="loveQuote(currentQuoteId)">
                             Love Quote
+                    </button>
+                    <button
+                        *ngIf="iscurrentQuoteLovedByUser"
+                        type="submit"
+                        data-dismiss="modal"
+                        class="btn btn-outline-secondary btn-block love-submit"
+                        (click)="unloveQuote(currentQuoteId)">
+                            Unlove Quote
                     </button>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Quote } from './quotes.model';
+import { Lover } from './lovers.model';
 import { QuotesService } from './quotes.service';
 import { AuthService } from '../../index/auth.service';
 
@@ -14,6 +15,12 @@ import { AuthService } from '../../index/auth.service';
 export class QuotesComponent implements OnInit, OnDestroy {
     quotes: Quote[];
     private quotesSub: Subscription;
+
+    lovers: Lover[] = [];
+    currentQuoteId: string;
+    iscurrentQuoteLovedByUser: boolean;
+    private loversSub: Subscription;
+    private isLovedByUserSub: Subscription;
 
     isUserAuth = false;
     private isAuthSub: Subscription;
@@ -37,9 +44,9 @@ export class QuotesComponent implements OnInit, OnDestroy {
             this.route.paramMap.subscribe(params => {
                 this.quotesService.getQuotesByUsername(params.get('username'));
                 this.quotesSub = this.quotesService.getQuoteUpdateListener()
-                .subscribe(quotes => {
-                    this.quotes = quotes;
-                });
+                    .subscribe(quotes => {
+                        this.quotes = quotes;
+                    });
             });
         }
 
@@ -49,14 +56,33 @@ export class QuotesComponent implements OnInit, OnDestroy {
                 this.isUserAuth = isAuth;
                 this.userId = this.authService.getUserId();
             });
+
+        this.loversSub = this.quotesService.getLoverUpdateListener()
+            .subscribe(lovers => {
+                this.lovers = lovers;
+            });
+
+        this.isLovedByUserSub = this.quotesService.getIsLovedUpdateListener()
+            .subscribe(isLoved => {
+                this.iscurrentQuoteLovedByUser = isLoved;
+            });
     }
 
     ngOnDestroy() {
-        this.quotesSub.unsubscribe();
         this.isAuthSub.unsubscribe();
+        this.quotesSub.unsubscribe();
+        this.loversSub.unsubscribe();
+        this.isLovedByUserSub.unsubscribe();
     }
 
     deleteQuote(quoteId: string) {
         this.quotesService.deleteQuote(quoteId);
+    }
+
+    fetchLovers(quoteId: string) {
+        this.lovers = [];
+        this.iscurrentQuoteLovedByUser = false;
+        this.currentQuoteId = quoteId;
+        this.quotesService.getQuoteLovers(quoteId);
     }
 }

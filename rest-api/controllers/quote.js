@@ -75,6 +75,33 @@ exports.addQuote = (req, res, next) => {
         });
 };
 
+exports.getQuoteLovers = (req, res, next) => {
+    const quoteId = req.params.quoteId;
+    Quote.findById(quoteId)
+        .then(quote => {
+            return quote.populate('lovers').execPopulate();
+        })
+        .then(quote => {
+            let isLovedByUser = false;
+            const loversInResponse = quote.lovers.map(lover => {
+                if (!isLovedByUser && lover._id.toString() === req.user._id.toString()) {
+                    isLovedByUser = true;
+                }
+                return { username: lover.username };
+            });
+            res.status(200).json({
+                lovers: loversInResponse,
+                isLovedByUser
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}
+
 exports.deleteQuote = (req, res, next) => {
     const quoteId = req.params.quoteId;
     Quote.deleteOne({ _id: quoteId, author: req.user })

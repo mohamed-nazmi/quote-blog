@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { Quote } from './quotes.model';
+import { Lover } from './lovers.model';
 import { environment } from '../../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl;
@@ -11,6 +12,10 @@ const BACKEND_URL = environment.apiUrl;
 export class QuotesService {
     private quotes: Quote[] = [];
     private quotesUpdated = new Subject<Quote[]>();
+
+    lovers: Lover[];
+    private loversUpdated = new Subject<Lover[]>();
+    private isLovedByUserUpdated = new Subject<boolean>();
 
     constructor(private http: HttpClient) { }
 
@@ -30,8 +35,25 @@ export class QuotesService {
             });
     }
 
+    getQuoteLovers(quoteId: string) {
+        this.http.get<{ lovers: Lover[], isLovedByUser: boolean }>(BACKEND_URL + '/quote/lovers/' + quoteId)
+            .subscribe(result => {
+                this.lovers = result.lovers;
+                this.loversUpdated.next([...this.lovers]);
+                this.isLovedByUserUpdated.next(result.isLovedByUser);
+            });
+    }
+
     getQuoteUpdateListener() {
         return this.quotesUpdated.asObservable();
+    }
+
+    getLoverUpdateListener() {
+        return this.loversUpdated.asObservable();
+    }
+
+    getIsLovedUpdateListener() {
+        return this.isLovedByUserUpdated.asObservable();
     }
 
     addQuote(content: string) {

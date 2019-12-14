@@ -18,7 +18,10 @@ router.post(
             .not().isEmpty()
             .isLength({ max: 120 })
     ],
-    quoteController.addQuote);
+    quoteController.addQuote
+);
+
+router.get('/quote/lovers/:quoteId', isAuth, quoteController.getQuoteLovers);
 
 router.delete('/quote/:quoteId', isAuth, quoteController.deleteQuote);
 
