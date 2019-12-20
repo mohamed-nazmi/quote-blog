@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -24,12 +25,19 @@ export class QuotesComponent implements OnInit, OnDestroy {
     private loversSub: Subscription;
     private isLovedByUserSub: Subscription;
 
-    comments: QuoteComment[];
+    comments: QuoteComment[] = [];
     private commentsSub: Subscription;
 
     isUserAuth = false;
     private isAuthSub: Subscription;
     private userId: string;
+
+    newCommentForm = new FormGroup({
+        newComment: new FormControl('', [
+            Validators.required,
+            Validators.maxLength(18)
+        ])
+    });
 
     constructor(
         private quotesService: QuotesService,
@@ -86,6 +94,10 @@ export class QuotesComponent implements OnInit, OnDestroy {
         this.commentsSub.unsubscribe();
     }
 
+    get newComment() {
+        return this.newCommentForm.get('newComment');
+    }
+
     deleteQuote(quoteId: string) {
         this.quotesService.deleteQuote(quoteId);
     }
@@ -97,17 +109,22 @@ export class QuotesComponent implements OnInit, OnDestroy {
         this.quotesService.getQuoteLovers(quoteId);
     }
 
-    loveQuote(quoteId: string) {
-        this.quotesService.loveQuote(quoteId);
+    loveQuote() {
+        this.quotesService.loveQuote(this.currentQuoteId);
     }
 
-    unloveQuote(quoteId: string) {
-        this.quotesService.unloveQuote(quoteId);
+    unloveQuote() {
+        this.quotesService.unloveQuote(this.currentQuoteId);
     }
 
     fetchComments(quoteId: string) {
         this.comments = [];
         this.currentQuoteId = quoteId;
         this.quotesService.getQuoteComments(quoteId);
+    }
+
+    addComment(newComment: HTMLInputElement) {
+        this.quotesService.commentOnQuote(this.currentQuoteId, newComment.value);
+        this.newCommentForm.reset();
     }
 }

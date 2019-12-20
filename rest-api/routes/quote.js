@@ -31,4 +31,15 @@ router.post('/love-quote/:quoteId', isAuth, quoteController.loveQuote);
 
 router.post('/unlove-quote/:quoteId', isAuth, quoteController.unloveQuote);
 
+router.post(
+    '/comment-quote/:quoteId',
+    isAuth,
+    [
+        body('content', 'Comment through 18 characters')
+            .not().isEmpty()
+            .isLength({ max: 18 })
+    ],
+    quoteController.commentOnQuote
+);
+
 module.exports = router;

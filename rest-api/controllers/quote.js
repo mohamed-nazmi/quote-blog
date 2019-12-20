@@ -201,6 +201,42 @@ exports.unloveQuote = (req, res, next) => {
         });
 };
 
+exports.commentOnQuote = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed!');
+        error.statusCode = 422;
+        error.data = errors.array()[0].msg;
+        throw error;
+    }
+
+    const quoteId = req.params.quoteId;
+    Quote.findById(quoteId)
+        .then(quote => {
+            const comment = {
+                author: req.user,
+                content: req.body.content
+            };
+            quote.comments.push(comment);
+            return quote.save();
+        })
+        .then(() => {
+            res.status(201).json({
+                comment: {
+                    _id: req.user._id.toString(),
+                    username: req.user.username,
+                    content: req.body.content
+                }
+            });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
 mapOneQuoteInResponse = quote => {
     const quoteInResponse = {
         _id: quote._id,

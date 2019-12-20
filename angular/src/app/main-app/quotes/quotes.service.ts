@@ -102,6 +102,18 @@ export class QuotesService {
             });
     }
 
+    commentOnQuote(quoteId: string, content: string) {
+        this.http.post<{ comment: QuoteComment }>(
+            BACKEND_URL + '/comment-quote/' + quoteId,
+            {
+                content
+            })
+            .subscribe(result => {
+                this.comments.push(result.comment);
+                this.commentsUpdated.next([...this.comments]);
+            });
+    }
+
     deleteQuote(quoteId: string) {
         this.http.delete(BACKEND_URL + '/quote/' + quoteId)
             .subscribe(() => {

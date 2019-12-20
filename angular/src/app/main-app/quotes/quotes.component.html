@@ -95,14 +95,14 @@
                         *ngIf="!iscurrentQuoteLovedByUser"
                         type="submit"
                         class="btn btn-outline-secondary btn-block love-submit"
-                        (click)="loveQuote(currentQuoteId)">
+                        (click)="loveQuote()">
                             Love Quote
                     </button>
                     <button
                         *ngIf="iscurrentQuoteLovedByUser"
                         type="submit"
                         class="btn btn-outline-secondary btn-block love-submit"
-                        (click)="unloveQuote(currentQuoteId)">
+                        (click)="unloveQuote()">
                             Unlove Quote
                     </button>
                 </div>
@@ -133,6 +133,9 @@
                 </h5>
             </div>
             <div class="modal-body pt-2 pb-1">
+                <div *ngIf="newCommentForm.touched && newCommentForm.invalid" class="alert alert-danger text-center">
+                    Comment through 18 characters
+                </div>
                 <div class="list-container">
                     <div class="list-container-inner">
                         <ul class="list-group mb-2">
@@ -152,12 +155,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Write your comment...">
+                <div [formGroup]="newCommentForm" class="input-group">
+                    <input class="form-control"
+                        type="text"
+                        placeholder="Write your comment..."
+                        formControlName="newComment">
                     <div class="input-group-append">
                         <button
                             class="btn btn-outline-secondary comment-submit"
-                            type="button">Comment</button>
+                            type="button"
+                            (click)="addComment(newComment)"
+                            [disabled]="newCommentForm.invalid">Comment</button>
                     </div>
                 </div>
             </div>
