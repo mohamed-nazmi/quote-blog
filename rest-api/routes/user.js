@@ -46,4 +46,6 @@ router.get('/received-requests', isAuth, userController.getUserReceivedRequests)
 
 router.post('/update-image', isAuth, multer({ storage: storage }).single('image'), userController.updateUserProfilePicture);
 
+router.get('/search-user/:search', userController.searchUsers);
+
 module.exports = router;

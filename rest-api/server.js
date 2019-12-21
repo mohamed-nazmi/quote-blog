@@ -25,7 +25,6 @@ app.use(userRoutes);
 app.use(quoteRoutes);
 
 app.use((error, req, res, next) => {
-    console.log('HEREEEEEEEEEEEEEEEEEEE');
     console.log(error);
     const status = error.statusCode || 500;
     const message = error.message;

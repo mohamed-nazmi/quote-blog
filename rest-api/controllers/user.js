@@ -1,5 +1,7 @@
 const User = require('../models/user');
 
+const MAX_SEARCH = 6;
+
 exports.getProfileInfoByUsername = (req, res, next) => {
     User.findOne({ username: req.params.username })
         .then(fetchedUser => {
@@ -299,6 +301,39 @@ exports.updateUserProfilePicture = (req, res, next) => {
             next(err);
         });
 }
+
+exports.searchUsers = (req, res, next) => {
+    const search = req.params.search;
+    const regex = { $regex: search, $options: 'i' };
+
+    User.aggregate()
+        .project({
+            fullname: { $concat: ['$firstname', ' ', '$lastname'] },
+            firstname: 1,
+            lastname: 1,
+            username: 1,
+            email: 1,
+        })
+        .match({
+            $or: [
+                { fullname: regex },
+                { username: regex },
+                { email: regex }
+            ]
+        })
+        .limit(MAX_SEARCH)
+        .exec(function (err, users) {
+            if (err) {
+                if (!err.statusCode) {
+                    err.statusCode = 500;
+                }
+                return next(err);
+            }
+            res.status(200).json({
+                users
+            });
+        });
+};
 
 determineRelationship = (currentUser, fetchedUser) => {
     let relationship;
