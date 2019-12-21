@@ -2,7 +2,7 @@
     <div class="dark-overlay">
         <div class="home-inner container">
             <div class="text-center" *ngIf="profileInfo">
-                <img class="profile-image rounded-circle" src="../../../assets/images/men/man-pp.jpg">
+                <img class="profile-image rounded-circle" [src]="profileInfo.imagePath ? profileInfo.imagePath : '../../../assets/images/default/male.jpg'">
                 <h1 class="mt-2 text-white display-4 profile-fullname mb-1">
                     {{ profileInfo.firstname }} <strong>{{ profileInfo.lastname }}</strong>
                 </h1>

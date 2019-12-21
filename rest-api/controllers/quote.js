@@ -4,18 +4,17 @@ const Quote = require('../models/quote');
 const User = require('../models/user');
 
 exports.getQuotes = (req, res, next) => {
-    Quote.find()
-        .then(quotes => {
-            res.status(200).json({
-                quotes: mapQuotesInResponse(quotes)
-            });
-        })
-        .catch(err => {
+    Quote.find().populate('author').exec((err, quotes) => {
+        if (err) {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            next(err);
+            return next(err);
+        }
+        res.status(200).json({
+            quotes: mapQuotesInResponse(quotes)
         });
+    })
 };
 
 exports.getQuotesByUsername = (req, res, next) => {
@@ -25,7 +24,7 @@ exports.getQuotesByUsername = (req, res, next) => {
         })
         .then(user => {
             res.status(200).json({
-                quotes: mapQuotesInResponse(user.quotes)
+                quotes: mapUserQuotesInResponse(user, user.quotes)
             });
         })
         .catch(err => {
@@ -49,12 +48,14 @@ exports.addQuote = (req, res, next) => {
     const author = req.user;
     const signature = req.user.username;
     const lovers = [];
+    const comments = [];
 
     const quote = new Quote({
         content,
         author,
         signature,
-        lovers
+        lovers,
+        comments
     });
 
     quote.save()
@@ -64,7 +65,7 @@ exports.addQuote = (req, res, next) => {
         })
         .then(() => {
             res.status(201).json({
-                quote: mapOneQuoteInResponse(quote)
+                quote: mapOneUserQuoteInResponse(req.user, quote)
             });
         })
         .catch(err => {
@@ -87,7 +88,7 @@ exports.getQuoteLovers = (req, res, next) => {
                 if (!isLovedByUser && lover._id.toString() === req.user._id.toString()) {
                     isLovedByUser = true;
                 }
-                return { username: lover.username };
+                return { username: lover.username, imagePath: lover.imagePath };
             });
             res.status(200).json({
                 lovers: loversInResponse,
@@ -113,6 +114,7 @@ exports.getQuoteComments = (req, res, next) => {
                 return {
                     _id: comment.author._id.toString(),
                     username: comment.author.username,
+                    imagePath: comment.author.imagePath,
                     content: comment.content
                 };
             });
@@ -165,7 +167,7 @@ exports.loveQuote = (req, res, next) => {
         })
         .then(() => {
             res.status(201).json({
-                lover: { username: req.user.username }
+                lover: { username: req.user.username, imagePath: req.user.imagePath }
             });
         })
         .catch(err => {
@@ -225,6 +227,7 @@ exports.commentOnQuote = (req, res, next) => {
                 comment: {
                     _id: req.user._id.toString(),
                     username: req.user.username,
+                    imagePath: req.user.imagePath,
                     content: req.body.content
                 }
             });
@@ -242,8 +245,8 @@ mapOneQuoteInResponse = quote => {
         _id: quote._id,
         content: quote.content,
         authorId: quote.author._id.toString(),
-        signature: quote.signature,
-        lovers: quote.lovers
+        imagePath: quote.author.imagePath,
+        signature: quote.author.username
     };
     return quoteInResponse
 };
@@ -251,6 +254,24 @@ mapOneQuoteInResponse = quote => {
 mapQuotesInResponse = quotes => {
     const quotesInResponse = quotes.map(quote => {
         return mapOneQuoteInResponse(quote);
+    });
+    return quotesInResponse;
+};
+
+mapOneUserQuoteInResponse = (user, quote) => {
+    const quoteInResponse = {
+        _id: quote._id,
+        content: quote.content,
+        authorId: user._id.toString(),
+        imagePath: user.imagePath,
+        signature: user.username
+    };
+    return quoteInResponse
+};
+
+mapUserQuotesInResponse = (user, quotes) => {
+    const quotesInResponse = quotes.map(quote => {
+        return mapOneUserQuoteInResponse(user, quote);
     });
     return quotesInResponse;
 };

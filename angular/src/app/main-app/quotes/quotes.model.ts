@@ -3,5 +3,5 @@ export interface Quote {
     content: string;
     authorId: string;
     username: string;
-    lovers: [];
+    imagePath: string;
 }

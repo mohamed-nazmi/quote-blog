@@ -1,0 +1,12 @@
+<br><br><br>
+
+<button class="btn btn-primary ml-3" (click)="filePicker.click()">Add Image</button>
+<input type="file" accept="image/*" #filePicker (change)="onImagePicked($event)">
+
+<div *ngIf="imagePreview">
+    <img [src]="imagePreview" alt="">
+</div>
+
+<div>
+    <button class="btn btn-success ml-3" (click)="saveImage()">Save</button>
+</div>

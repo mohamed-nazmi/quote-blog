@@ -23,6 +23,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    imagePath: {
+        type: String
+    },
     quotes:  [{
         type: Schema.Types.ObjectId,
         ref: 'Quote'

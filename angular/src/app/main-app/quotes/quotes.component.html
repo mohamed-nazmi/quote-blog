@@ -4,7 +4,7 @@
             <div class="col-sm-6 col-lg-4 text-center quote-block" *ngFor="let quote of quotes">
                 <img
                     class="quote-image rounded-circle"
-                    src="../../../assets/images/men/man-pp.jpg"
+                    [src]="quote.imagePath ? quote.imagePath : '../../../assets/images/default/male.jpg'"
                     alt="">
                 <div class="card quote-card">
                     <div class="card-header quote-header bg-transparent">
@@ -77,7 +77,9 @@
                         <ul class="list-group mb-2">
                             <li class="list-group-item bg-light" *ngFor="let lover of lovers">
                                 <div class="ml-2 my-1 media d-flex align-items-center">
-                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <img
+                                        class="react-image rounded-circle"
+                                        [src]="lover.imagePath ? lover.imagePath : '../../../assets/images/default/male.jpg'">
                                     <div class="media-body">
                                         <blockquote class="blockquote-footer react-author mb-0">
                                             @{{ lover.username }}
@@ -141,7 +143,9 @@
                         <ul class="list-group mb-2">
                             <li class="list-group-item bg-light" *ngFor="let comment of comments">
                                 <div class="ml-2 my-1 media d-flex align-items-center">
-                                    <img class="react-image rounded-circle" src="../../../assets/images/men/man1.jpg">
+                                    <img
+                                        class="react-image rounded-circle"
+                                        [src]="comment.imagePath ? comment.imagePath : '../../../assets/images/default/male.jpg'">
                                     <div class="media-body">
                                         <blockquote class="blockquote-footer react-author mb-0">
                                             @{{ comment.username }}

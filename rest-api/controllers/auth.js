@@ -26,7 +26,8 @@ exports.postSignup = (req, res, next) => {
                 lastname,
                 username,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                imagePath: null
             });
             return user.save();
         })

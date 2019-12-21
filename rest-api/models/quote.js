@@ -12,10 +12,6 @@ const quoteSchema = new Schema({
         ref: 'User',
         required: true
     },
-    signature: {
-        type: String,
-        required: true
-    },
     lovers: [{
         type: Schema.Types.ObjectId,
         ref: 'User'

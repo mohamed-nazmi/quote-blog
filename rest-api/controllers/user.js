@@ -13,6 +13,7 @@ exports.getProfileInfoByUsername = (req, res, next) => {
                 firstname: fetchedUser.firstname,
                 lastname: fetchedUser.lastname,
                 username: fetchedUser.username,
+                imagePath: fetchedUser.imagePath,
                 relationship: determineRelationship(req.user, fetchedUser)
             };
             res.status(200).json({
@@ -284,6 +285,21 @@ exports.getUserReceivedRequests = (req, res, next) => {
         });
 };
 
+exports.updateUserProfilePicture = (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host');
+    req.user.imagePath = url + '/images/' + req.file.filename;
+    req.user.save()
+        .then(user => {
+            res.status(200).json({});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}
+
 determineRelationship = (currentUser, fetchedUser) => {
     let relationship;
 
@@ -307,6 +323,7 @@ mapOneFriendInResponse = friend => {
         _id: friend._id,
         fullname: friend.firstname.concat(' ', friend.lastname),
         username: friend.username,
+        imagePath: friend.imagePath
         // description: friend.description
     };
     return friendInResponse

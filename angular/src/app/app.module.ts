@@ -15,6 +15,7 @@ import { HomeComponent } from './main-app/home/home.component';
 import { QuotesComponent } from './main-app/quotes/quotes.component';
 import { FriendsComponent } from './main-app/friends/friends.component';
 import { AuthInterceptor } from './index/auth-interceptor';
+import { SettingsComponent } from './main-app/settings/settings.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { AuthInterceptor } from './index/auth-interceptor';
         ProfileComponent,
         HomeComponent,
         QuotesComponent,
-        FriendsComponent
+        FriendsComponent,
+        SettingsComponent
     ],
     imports: [
         BrowserModule,
