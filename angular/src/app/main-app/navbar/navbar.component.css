@@ -1,3 +1,71 @@
 .navbar-bg {
     background-color: black;
+    min-width: 600px;
+}
+
+.navbar-brand {
+    padding-right: 24px;
+    margin-right: 16px;
+}
+
+.nav-pills .nav-link {
+    padding-right: 4px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-pills .nav-link:hover {
+    color: rgba(255, 255, 255) !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: transparent;
+}
+
+.fa-nav {
+    font-size: 1.12rem;
+}
+
+.search-dropdown {
+    width: 300px;
+}
+
+.search-bar {
+    width: 280px;
+}
+
+.list-container {
+    position: relative;
+    height: 214px;
+    overflow: hidden;
+    margin: 0px auto;
+}
+
+.list-container-inner {
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+    padding-right: 15px;
+    overflow: -moz-scrollbars-none;
+}
+
+.list-container-inner::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.list-group {
+    margin-left: 10px;
+}
+
+.search-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+.blockquote-footer {
+    font-size: 1rem;
+}
+
+.search-author::before {
+    content: "";
 }

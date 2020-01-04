@@ -1,5 +1,10 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}  
+
 body {
-    min-width: 400px;
+    min-width: 600px;
 }
 
 button:focus,

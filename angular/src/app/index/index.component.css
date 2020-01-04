@@ -4,7 +4,7 @@
     background-size: cover;
     background-attachment: fixed;
     color: #fff;
-    min-height: 657px;
+    height: 100%;
 }
 
 #index-section .dark-overlay {
@@ -12,7 +12,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 657px;
+    height: 100%;
     background: rgba(0, 0, 0, 0.75);
 }
 
