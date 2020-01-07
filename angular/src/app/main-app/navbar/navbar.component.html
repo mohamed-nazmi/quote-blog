@@ -18,19 +18,26 @@
                     <i class="fas fa-search fa-nav mt-1"></i>
                 </a>
                 <div class="dropdown-menu search-dropdown" aria-labelledby="navbarDropdown">
-                    <input type="text" class="form-control search-bar mx-auto" placeholder="Search">
+                    <form [formGroup]="searchForm">
+                        <input
+                            type="text"
+                            class="form-control search-bar mx-auto"
+                            placeholder="Search"
+                            formControlName="searchInput"
+                            (keyup)="fetchUsers()">
+                    </form>
                     <div class="dropdown-divider"></div>
                     <div class="list-container">
                         <div class="list-container-inner">
                             <ul class="list-group mb-2">
-                                <li class="list-group-item">
+                                <li class="list-group-item" *ngFor="let searchedUser of searchedUsers">
                                     <div class="ml-2 my-1 media d-flex align-items-center">
                                         <img class="search-image rounded-circle"
-                                            src="../../../assets/images/default/male.jpg">
+                                            [src]="searchedUser.imagePath ? searchedUser.imagePath : '../../../assets/images/default/male.jpg'">
                                         <div class="media-body">
-                                            Ali Ahmed
+                                            {{ searchedUser.firstname }} {{ searchedUser.lastname }}
                                             <blockquote class="blockquote-footer search-author mb-0">
-                                                ali-ahmed
+                                                {{ searchedUser.username }}
                                             </blockquote>
                                         </div>
                                     </div>

@@ -313,6 +313,7 @@ exports.searchUsers = (req, res, next) => {
             lastname: 1,
             username: 1,
             email: 1,
+            imagePath: 1
         })
         .match({
             $or: [
