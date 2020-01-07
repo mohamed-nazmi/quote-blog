@@ -3,19 +3,40 @@ const { validationResult } = require('express-validator');
 const Quote = require('../models/quote');
 const User = require('../models/user');
 
-exports.getQuotes = (req, res, next) => {
-    Quote.find().populate('author').exec((err, quotes) => {
-        if (err) {
+const MAX_QUOTES_PER_USER_IN_HOME = 3;
+
+exports.getHomepageQuotes = (req, res, next) => {
+    let homeQuotes = [];
+    req.user.populate('friends').execPopulate()
+        .then(user => {
+            return user.populate('friends.quotes').execPopulate();
+        })
+        .then(user => {
+            user.friends.forEach(friend => {
+                const friendQuotes = friend.quotes.slice(0, MAX_QUOTES_PER_USER_IN_HOME);
+                friendQuotes.forEach(quote => {
+                    homeQuotes.push(mapOneUserQuoteInResponse(friend, quote));
+                });
+            });
+            return user.populate('quotes').execPopulate();
+        })
+        .then(user => {
+            const quotes = user.quotes.slice(0, MAX_QUOTES_PER_USER_IN_HOME);
+            quotes.forEach(quote => {
+                homeQuotes.push(mapOneUserQuoteInResponse(user, quote));
+            });
+            homeQuotes.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
+            res.status(200).json({
+                quotes: homeQuotes
+            });
+        })
+        .catch(err => {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            return next(err);
-        }
-        res.status(200).json({
-            quotes: mapQuotesInResponse(quotes)
+            next(err);
         });
-    })
-};
+}
 
 exports.getQuotesByUsername = (req, res, next) => {
     User.findOne({ username: req.params.username })
@@ -264,7 +285,8 @@ mapOneUserQuoteInResponse = (user, quote) => {
         content: quote.content,
         authorId: user._id.toString(),
         imagePath: user.imagePath,
-        signature: user.username
+        signature: user.username,
+        createdAt: quote.createdAt
     };
     return quoteInResponse
 };

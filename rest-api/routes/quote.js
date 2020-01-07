@@ -6,9 +6,9 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/quotes', quoteController.getQuotes);
+router.get('/quotes', isAuth, quoteController.getHomepageQuotes);
 
-router.get('/quotes/:username', quoteController.getQuotesByUsername);
+router.get('/quotes/:username', isAuth, quoteController.getQuotesByUsername);
 
 router.post(
     '/quote',

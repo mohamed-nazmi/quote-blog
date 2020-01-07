@@ -25,6 +25,6 @@ const quoteSchema = new Schema({
             type: String
         }
     }]
-});
+}, { timestamps: { } });
 
 module.exports = mongoose.model('Quote', quoteSchema);
