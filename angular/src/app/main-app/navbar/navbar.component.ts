@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../index/auth.service';
 import { NavbarService } from './navbar.service';
 import { ProfileInfo } from '../profile/profile.model';
+import { Friend } from '../friends/friends.model';
 
 @Component({
     selector: 'app-navbar',
@@ -15,6 +16,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     username: string;
     searchedUsers: ProfileInfo[];
     private searchSub: Subscription;
+
+    receivedRequests: Friend[] = [];
+    private receivedRequestsSub: Subscription;
+
+    sentRequests: Friend[] = [];
+    private sentRequestsSub: Subscription;
+
+    private receivedOrSent = false;
+    private requests;
 
     private searchForm = new FormGroup({
         searchInput: new FormControl()
@@ -28,10 +38,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
             .subscribe(searchedUsers => {
                 this.searchedUsers = searchedUsers;
             });
+
+        this.navbarService.displayReceivedRequests();
+        this.receivedRequestsSub = this.navbarService.getReceivedRequestsUpdated()
+            .subscribe(receivedRequests => {
+                this.receivedRequests = receivedRequests;
+                if (!this.receivedOrSent) {
+                    this.requests = this.receivedRequests;
+                }
+            });
+
+        this.navbarService.displaySentRequests();
+        this.sentRequestsSub = this.navbarService.getSentRequestsUpdated()
+            .subscribe(sentRequests => {
+                this.sentRequests = sentRequests;
+                if (this.receivedOrSent) {
+                    this.requests = this.sentRequests;
+                }
+            });
     }
 
     ngOnDestroy() {
         this.searchSub.unsubscribe();
+        this.receivedRequestsSub.unsubscribe();
+        this.sentRequestsSub.unsubscribe();
     }
 
     get searchInput() {
@@ -48,5 +78,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
         } else {
             this.searchedUsers = [];
         }
+    }
+
+    viewSentRequests($event: Event) {
+        $event.stopPropagation();
+        this.receivedOrSent = true;
+        this.requests = this.sentRequests;
+    }
+
+    viewReceivedRequests($event: Event) {
+        $event.stopPropagation();
+        this.receivedOrSent = false;
+        this.requests = this.receivedRequests;
     }
 }

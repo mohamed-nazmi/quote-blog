@@ -7,10 +7,45 @@
                     <i class="fas fa-bell fa-nav mt-1 pointer"></i>
                 </span>
             </li>
-            <li class="nav-item">
-                <span class="nav-link">
+            <li class="nav-item dropdown">
+                <!-- <span class="nav-link">
                     <i class="fas fa-user-friends fa-nav mt-1 pointer"></i>
-                </span>
+                </span> -->
+                <a class="nav-link nav-dropdown pointer" id="requestsDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-friends fa-nav mt-1"></i>
+                </a>
+                <div class="dropdown-menu search-dropdown" aria-labelledby="requestsDropdown">
+                    <div class="requests-bar mx-auto">
+                        <div *ngIf="!receivedOrSent">
+                            <button type="button" class="btn btn-outline-primary btn-block"
+                                (click)="viewSentRequests($event)">View Sent Requests?</button>
+                        </div>
+                        <div *ngIf="receivedOrSent">
+                            <button type="button" class="btn btn-outline-primary btn-block"
+                                (click)="viewReceivedRequests($event)">View Received Requests?</button>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="list-container">
+                        <div class="list-container-inner">
+                            <ul class="list-group mb-2">
+                                <li class="list-group-item" *ngFor="let request of requests">
+                                    <div class="ml-2 my-1 media d-flex align-items-center">
+                                        <img class="search-image rounded-circle"
+                                            [src]="request.imagePath ? request.imagePath : '../../../assets/images/default/male.jpg'">
+                                        <div class="media-body">
+                                            {{ request.fullname }}
+                                            <blockquote class="blockquote-footer search-author mb-0">
+                                                {{ request.username }}
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-dropdown pointer" id="navbarDropdown" data-toggle="dropdown"
@@ -19,12 +54,8 @@
                 </a>
                 <div class="dropdown-menu search-dropdown" aria-labelledby="navbarDropdown">
                     <form [formGroup]="searchForm">
-                        <input
-                            type="text"
-                            class="form-control search-bar mx-auto"
-                            placeholder="Search"
-                            formControlName="searchInput"
-                            (keyup)="fetchUsers()">
+                        <input type="text" class="form-control search-bar mx-auto" placeholder="Search"
+                            formControlName="searchInput" (keyup)="fetchUsers()">
                     </form>
                     <div class="dropdown-divider"></div>
                     <div class="list-container">
